@@ -1,0 +1,10 @@
+* 2D Matrix
+** Print 2D array
+loop i -> N - 1
+    loop j -> M - 1
+    print a[i][j]
+** Get ith row sum
+sum = 0
+loop j -> M - 1
+    sum += a[i][j]
+print(a[i][j])    

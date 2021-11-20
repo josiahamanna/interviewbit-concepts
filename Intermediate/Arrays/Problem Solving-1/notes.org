@@ -1,0 +1,21 @@
+* Hashmap
+1. To insert a element in to a Hashmap/Hashset: O(1)
+2. To insert a string in to a Hashmap/Hashset: O(N)
+* Dynamic arrays
+1. int ar[10] means array of length 10 is created
+2. First 10 insertions are of O(1)
+3. if one more elements comes then, we double the size of the array so that frequency of copy gets reduced.
+4. In asymptotic analysis Big(O) the above has a time complexity is O(N)
+5. But amortized analysis says that if the frequency of the particular task is very very less when compared to other occurrences we can neglect.
+   1. Assume array size is 1; the first element will take O(1)
+   2. Add one more element; arr[2] => O(1) (in between you did the copying thing and all in 1 iteration)
+   3. add one more element; arr[4] => O(1) for 3rd and 4th element (copy 2 iterations)
+   4. one more; arr[8] => O(1) => 5, 6, 7, 8 elements (copy 4 iterations)
+   5. one more; arr[16] => O(1) => 9, 10 ... elements (copy 8 iteration) total copy
+   6. In general if there is N insertions there will be N-1 iterations
+   7. Total iterations to insert N elements is close to 2N
+   8. On an average for a single element insertion, we need 2 iterations.
+6. Will we always double? (No, based on load factor)
+7. Can we delete elements in list? (it should also reduce size, decrease by load factor)
+8. if %f array is filled then increase size by factor
+9. if %f array is wastage then decrease size by factor

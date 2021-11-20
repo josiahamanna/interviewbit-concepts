@@ -1,0 +1,32 @@
+* Topics
+1. Sub sequence: Prob of Adv
+2. Sub Array: Prob of Med
+3. Sub Array: Prob of Adv
+4. How to generate Array list (Vectors)
+5. Amortized analysis 
+* 1
+** Problem
+1. Given N array element calculate sum of |max-min| every sub sequence.
+2. For example [3, 1, -4]
+   1. {3}, {3, 1}, {3, -4}, {3, 1, -4}, {1, -4}, {-4}, {1}
+   2. |max - min| will be
+      0, 2, 7, 7, 5, 0, 0 respectively
+   3. So sum of all those will be 27
+
+** Solution
+1. Brute force: Generate all sub sequences and get Max - Min
+   TC: N*2^N; SC: 1
+2. You can sort because, Max - Min doesn't get effected (because elements will remain the same even though order will change). But if you sort you have to calculate |max-min| for every sub sequences.
+3. Can we make this statement?
+   sum of max of every subsequences - sum of min of every subsequences
+   When an element is max of a subsequences than it will contribute.
+   Sort the array first
+   Then each element will be maximum in 2^i: contributions A[i]*2^i
+   Then each element will be minimum in 2^i: contributions A[i]*2^(N-i-1)
+   Done
+* 2
+** Problem
+1. Given N array elements, each element is either 0 or 1 calculate no of sub arrays whose OR of all the elements will be 1.
+** Solution 
+1. count no of consecutive zeros are present
+   sub arrays => ((x)(x+1))/2
