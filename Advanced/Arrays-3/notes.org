@@ -1,0 +1,92 @@
+* 2D Matrix
+** First Half
+*** Problem 1
+1. Sub matrix can be represented in 2 opposite corners.
+   Top left and Right bottom index.
+2. Problem: Given a matrix of M*N, you are given Q queries find sum of all elements in the sub matrix.
+3. Brute force: iterate over the sub matrix and find the sum
+   TC: O(q*n*m)
+4. In the case of 1D we used prefix sum for sum related things
+   Can we build a prefix matrix [i][j] = sum of sub matrix (0,0) to (i,j)
+   How to find this?
+5. Suppose you are given 6*6 matrix
+   and you are given (1, 3) to (4,4) for finding the sum.
+   your answer is; sum = prefix[4][4] - prefix[0][4] - prefix[4][3] + prefix[0][2];
+6. Generalize it: you are given (a1, b1) (a2, b2)
+   sum = prefix[a2, b2] - prefix[a1-1][b2] - prefix[a2][b1-1] + prefix[a1-1][b1-1];
+7. sudo code:
+   sum  = pf[a2][b2]
+   if(a1>0) sum -= prefix[a1-1][b2];
+   if(b1>0) sum -= prefix[a1][b1-1];
+   if(a1>0 && b1>0) += prefix[a1-1][b1-1];
+8. How do find prefix sum?
+   |----+----+----|
+   | a0 | b0 | c0 |
+   | a1 | b1 | c1 |
+   | a2 | b2 | c2 |
+   |----+----+----|
+   (0, 0) = a0
+   (0, 1) = a1 + b0
+   (0, 2) = a0+b1+c0 . . .
+   1. Take the prefix sum for every row (prefix[i][j] = prefix[i][j-1] + arr[i][j])
+   2. Take the prefix sum of columns using the prefix sum of row (prefix[i][j] = prefix[i-1][j] + prefix[i][j])
+   3. Using this we can solve the problem in TC: O(N*M+q*1)
+*** Problem 2
+1. Given a sub matrix N*M find total sum of all sub matrices sum
+2. Brute force: Generate all sub matrices.
+   Consider all possible combination of TL and BR
+3. Pseudo code
+   for(a1 = 0; a1 < n; a1++) {
+     for(b1 = 0; b1 < m; b1++) {
+       // TL {a1, b1}
+       for(a2 = a1; a2 < n; a2++) {
+         for(b2 = b1; b2 < m; b2++) {
+           // BR {a2, b2}
+           
+         } 
+       }
+     } 
+   }
+4. Can't do the above.
+   How many sub matrices Aij is coming?
+   Count of sub matrices * A[i][j] (Contribution)
+5. How to find contribution?
+   How many possible combination TL and BR are there such that element is present?
+   TL : Number of options (i+1)*(j+1)
+   BR : Number of options (n-i)*(m-j)
+6. So the total answer is (i+1)*(j+1)*(n-i)*(m-j)
+*** Problem 3
+1. Given a row-wise and column-wise sorted matrix find maximum sub matrix sum
+2. Last element i.e., n-1, m-1 is the greatest element.
+3. So the bottom right should always be in our answer.
+4. You can find TL using the prefix sum 
+*** Problem 4
+1. Given a matrix find the maximum sub matrix sum.
+2. For 1D array we applied Kadane.
+3. Take 2*6 matrix for instance
+   For first row apply Kadane
+   For second row apply Kadane
+   For first and second row (combined), convert into 1D array by adding the column then apply kadane
+4. If the rows fixed we can easily apply Kadane.
+5. Get prefix sum of all the columns
+6. Get all top rows and bottom rows combination using two for loops
+7. Apply kadanes
+8. Pseudo code
+   // Generate column wise prefix sum
+   for(toprow = 0; torow<N; toprow++) {
+     for(bottomrow=toprow; bottomrow<N;bottomrow++) {
+       for(let j = 0; j < m; j++) {
+         sum += prefix[bottomrow[j]]-prefix[toprow-1][j];
+         ans = max(sum, ans)
+         if(sum < 0) {
+           sum = 0;
+         }
+       }
+     } 
+   }
+9. TC: N^2*M 
+*** Problem 5
+1. Given a 2D integer matrix A of size N x N find a B x B submatrix where B<= N and B>= 1, such that sum of all the elements in submatrix is maximum.
+2. Apply the problem 1 logic.
+3. Create your own TL and BR array.
+

@@ -1,0 +1,5 @@
+* Conbinatoirics
+** Problem
+1. You are given 3 true or false question
+2. In how many number of ways you can answer these question?
+3. You have to be completely clear about the problem
