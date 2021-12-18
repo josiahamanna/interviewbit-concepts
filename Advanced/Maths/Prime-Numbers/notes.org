@@ -1,0 +1,36 @@
+* Prime numbers
+1. Positive numbers which has exactly two factors (1, itself)
+2. 2, 5, 7, 13
+3. We can find the factors in square root iterations
+4. explanation : i <= n/i => i*i <= n => i <= square root n
+5. If a number is a non-prime, it will at least have one factor from 2-root(n)
+** Find all the primes from 1-N;
+1. Call isPrime for all the numbers
+2. TC:Nsqrt(N);
+3. Let's take an example
+4. 1 to 50: assume every number is prime
+5. 1 prime
+6. 2 is prime and also 2's multiples are not prime
+7. 3 is prime (there was no number before 3 which was able to divide 3). Remove multiples of 3.
+8. 4 is false because there was a number who could divide 4. Removing multiples of 4 because it already done by 2.
+9. 5 is prime and Remove multiples of 5.
+10. 6 is already gone. Multiples are also gone by either by 2 or 6.
+11. And so on.
+12. Pseudo code
+    consider 1-N as prime. Take a Boolean array with all true of size N+1 (N+1 because indexing start from 0)
+    Start from 2 and go to every number till n
+    if it is prime then go to it's multiple and make it false
+    if not don't  do any thing
+    for(i = 2; i <= N; i++) { // i*i < N
+      if(isPrime[i]) {
+        for(j = i*2; j < N; j+=i) { // j = i*i; 
+          isPrime[j] = false;
+        } 
+      }
+    }
+** Smallest prime factor
+1. Smallest prime factor of 18 -> 2, 49 -> 9, 15 -> 3
+2. Create a array called spf with same elements as input.
+3. We can tell prime or not by spf[i] === i
+4. Try writing a code in note book.
+5. always fill the min 

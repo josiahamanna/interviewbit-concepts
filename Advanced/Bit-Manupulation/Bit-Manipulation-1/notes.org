@@ -1,0 +1,51 @@
+* Bit Manipulation
+1. Day to day number system is decimal
+2. Computer can only understand binary
+3. Decimal to binary do long division
+** Adding two binary numbers.
+1. Cover to decimal, add, convert to binary
+2. 1 + 0 = 1
+   0 + 0 = 0
+   1 + 1 = 10
+   1 + 1 + 1 = 11
+** Concept
+1. If you have 5 bits, we can 2^5 different numbers.
+2. And we can only represent 0 to 2^5-1.
+3. How do we also represent negative numbers?
+   1. 0th bit is Least significant bit
+   2. N-1th bit is Most significant bit
+   3. Computers use MSB for calculating negative numbers
+   4. So we have one bit less for representing positive numbers
+   5. Range of positive numbers is 0 to 2 ^ (N-1) - 1;
+   6. Range of negative numbers is -(2^N-1) to -1
+   7. Let's say we have 8 bits; range is -2^(7) to 2^7-1
+4. 2's compliment: Take 1's complement and add 1
+   1's complement is toggling all the bits
+** Properties
+1. a & b = b & a
+2. a | b = b | a
+3. a ^ b = b ^ a
+4. same goes to associative
+** Left shift
+1. MSB will be lost
+2. After left shifting the number will be double.
+3. a << i = a * 2^i (until the answer is the range, or else it will overflow)
+** Right shift
+1. LSB will go to the dustbin
+2. After right shift the number will be halved
+3. a >> i a/2^i (integer division)
+4. If there is a 1 in the MSB, then 1 will come in place of 1 while right shift
+** Problem 2
+1. Find out ith bit is set or not
+2. N & (1 << i) if 0 then unset, or set (the value will be 2^i)
+3. (N >> i) & 1 if 0 then unset, or set
+** Problem 3
+1. All the numbers have then duplicates except from one no!
+2. Take XOR of all the elements.
+** Problem 4
+1. There is a array. All the elements repeats thrice. But there is one digit which is only once.
+2. Contribution of bits.
+3. For every bit count of number it is set
+4. If the bit count % 3 is 0 then this bit is not set in unique number
+5. If the bit count % 3 is 1 then this bit is set in unique number
+
