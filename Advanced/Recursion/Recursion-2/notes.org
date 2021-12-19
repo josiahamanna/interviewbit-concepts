@@ -1,0 +1,83 @@
+* Recursion 2
+** Problem 1
+1. Towers of Hanoi
+   1. We can move one disk at a time
+   2. We can not place a larger disk on a smaller disk
+2. Steps
+   1. A->C
+   2. A->B
+   3. C->B
+   4. A->C
+   5. B->A
+   6. B->C
+   7. A->C
+3. Given N disks, move all the disks from A->C, print moment of the disks.
+4. How is this recursion?
+   1. If N=1
+      1. We can move A->C and we are done
+   2. If N=2
+      1. A->B
+      2. A->C
+      3. B->C
+   3. If N=3
+      1. A->C
+      2. A->B
+      3. C->B
+      4. A->C
+      5. B->A
+      6. B->C
+      7. A->C
+   4. If N=4
+      1. A->B
+      2. A->C
+      3. B->C
+      4. C->A
+      5. C->B
+      6. A->B
+      7. A->C
+      8. B->C
+      9. B->A
+      10. C->A
+      11. B-C
+      12. A-B
+5. To move Nth disk from A->C we should not have any disks above Nth disk in A and no disks in C. That means should have N-1 disks from A->B.
+6. Once again we have to move N-1 disks from B->C. We can see the recursion here.
+7. Recursive relation
+   1. T(N) = 2T(N-1) + 1
+** Problem 2
+1. Kth symbol, row generated using previous row. Wherever 0 is there replace with 01. Wherever 1 is there replace with 10.
+2. 1: 0
+   2: 01
+   3: 0110
+   4: 01101001
+3. We need to find in kth row the index value
+4. Brute force
+   1. Generate all the rows
+   2. And get the kth index
+   3. Time and space complexity will be 2^n
+5. We can make two observations
+   1. First half of kth row is exactly of same as k-1th row.
+   2. Second half of kth row is inverse of k-1th row.
+   3. In other words
+      1. For a given row 1st half = Previous row
+         1. N = 5 first half [0-7] => N=4 full row
+         2. N = i first half [0-2^(i-2))
+      2. For given row 2nd half = Toggle previous row
+         N = i 2nd half = [2^(i-2) - 2^i-1)
+6. Pseudo
+   if (A === 0 || A === 1) {
+    return 0;
+   }
+   if (B < Math.pow(2, A - 2)) {
+    return solve(A - 1, B);
+   } else {
+    return 1 - solve(A - 1, B - Math.pow(2, A - 2));
+   }
+** Masters theorem.
+1.
+   A = 1: 0
+   A = 2: 01
+   A = 3: 0110
+   A = 4: 01101001
+   
+

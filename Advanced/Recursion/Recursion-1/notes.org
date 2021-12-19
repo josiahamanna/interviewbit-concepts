@@ -17,7 +17,7 @@
    2. Main logic
       Solving assumption using sub problems
    3. Base condition
-      When to stop
+      When do you want to stop your recursive function
 6. Consider the above problem
    1. Assumption: Calculate and return sum of N natural numbers
    2. Main logic: Solving assumption with sub problems. Call the same function with smaller instance of same problem i.e., sum(N-1). And for that result we have to add N.
@@ -110,5 +110,5 @@
       and so on 2^k*(T(N/2^k)) + 2^k-1; k = logN
       N*1 + N + 1 = 2N - 1
 ** TODO
-T(N) = 2 * T(N/2) + O(N) ; T(1) = 1;
-T(N) = 2 * T(n-1) + O(1) ; T(1) = 1;
+T(N) = 2 * T(N/2) + O(N) ; T(1) = 1; 
+T(N) = 2 * T(n-1) + O(1) ; T(1) = ;1
