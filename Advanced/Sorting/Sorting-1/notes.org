@@ -1,0 +1,135 @@
+* Sorting 1
+1. What is sorting?
+   Arrangement of data
+2. 1 2 3 4 5
+   This data is sorted in ascending order
+3. 6 5 4 3 2
+   This data is sorted in descending order
+4. 1 7 2 4 9 6
+   This data is sorted in ascending order of number of factors
+5. The sort function which we use (as a in build method) usually sorts it in ascending order
+6. Why sorting?
+   To manipulate data you need to first search the data
+   If the data is sorted then searching becomes easy
+7. Example: Names are given, corresponding marks are given
+   1. We have to sort the data according to marks
+   2. If two people have the same marks, then sort it according arrival. (According to the original data)
+   3. This is called stable sort.
+   4. If two data points have same parameter value and the data points are in same relative order the it is called stable sort.
+8. What is Inplace sorting?
+   When the sorting algorithm is not taking extra space then that algorithm is called Inplace sorting algorithm.
+** Selection Sort
+1. Given array elements, find kth minimum/smallest element?
+2. What would do if don't know sorting?
+3. Finding out the first minimum is very easy. Compare with every one.
+4. Then delete the first minimum, then go again find the next minimum.
+5. This process is kind of sorting.
+6. Instead of deleting the element we can put that element in right place.
+7. When you find the minimum element in the ith position, we want to place it in the 0th index.
+   We can swap.
+8. So you do this N times data will be sorted
+9. You are selecting an element which is minimum and placing it in the right place, so selection sort.
+10. Pseudo
+    for(i:0-N-1) {
+      min = MAX_INT;
+      index = -1;
+      for(j:i-N-1) {
+        if(arr[j] < min) {
+          min = arr[j];
+          index = j;
+        }
+      }
+      swap(arr[i], arr[index]);
+    }
+11. Time complexity: O(N^2)
+12. Is it stable? No. It is unstable. Can you make it stable? TODO
+13. Is it inplace? Yes it is.
+14. In the worst case, maximum number of swaps will be N-1
+** Bubble Sort
+1. Imagine school assemblies.
+2. We want to swap adjacent elements.
+3. When will you try to swap adjacent elements? (say we want to sort it in increasing)
+   arr[i] > a[i+1] then swap
+4. In one iteration we achieve to move the largest element to the last
+5. Why did that happen? The largest element, it is problem to everybody. So he will beat everyone. Next iteration next largest element is the problem for everybody. And so on.
+6. Pseudo
+   do n iteration
+   i = 0 -> n
+   swap(ith and i+1th element if required)
+7. TC: O(N^2)
+8. Is it stable? Yes it is. Because we are only swapping only if there is necessity.
+9. Is it inplace? Yes it is.
+10. In worst case, in approximation will be in the order of N^2
+11. We can do slight optimisation: In the first iteration there are not swaps then break it because the elements are already swaps. 
+** Insertion Sort
+1. Imagine playing cards.
+   You have one card. It's already sorted.
+   You pick one from deck, check it with the one which you already have compare and place it in the right position
+   And continue . . .
+   At any point of time the cards in your hand will be sorted
+2. 2 4 7 12 15 we are picking 5 and find the right place
+   2 5 5 7 12 15
+3. Swaps are involved. In a iterative fashion.
+4. Pseudo
+   for(i:1-N-1) {
+     int j = i;
+     while(arr[j] < arr[i] && j >= 1) {
+       swap(arr[j], arr[i]);
+       j--;
+     }
+   }
+5. TC: O(N^2)
+6. Is it stable? Yes it is. Swaps are done only if it is necessary.
+7. Is it inplace? yes it is.
+** Problem 1
+1. Given 2 sorted arrays, merge 2 sorted arrays to get a final sorted array.
+2. Fill all elements into third array and apply any above sorting algorithm. This is the basic approach.
+3. For knowing the least element you can just refer the first element of both the arrays and compare.
+4. Maintain two pointer. Once you consider element then move the pointer in that particular element.
+5. Pseudo code.
+   int merge (int A[], int B[], int n, int m, int C[]) {
+     int p1 = 0, p2 = 0, p3 = 0;
+     while(p1 < n && p2 < m) {
+       if(A[p1] <= B[p2]) {
+         c[p3] = A[p1];
+         p1++;
+         p3++;
+       }
+       else {
+         c[p3] = B[p2];
+         p3++;
+         p2++;
+       }
+     }
+     while(p1 < n) {c[p3] = A[p1]; p1++; p3++;}
+     while(p2 < m) {c[p3] = B[p2]; p2++; p3++;}
+   }
+** Problem 2
+1. Given with one array with N elements. Given three indexes (l, m, r).
+   The array are sorted from l to m-1 and m to r.
+   You need to give array with sorted elements from l to r.
+2. This is exactly same as the previous problem.
+3. We cannot straight away make changes on the same array.
+4. New array size will be [l, r] => r-l+1.
+5. Pseudo
+   int merge (int A[], int l, int, m, int  r) {
+     int p1 = l, p2 = m, p3 = 0;
+     int temp(r-l+1) {
+       while(p1 < m && p2 <= r) {
+         if(A[p1] <= A[p2]) {
+           temp[p3++] = A[p1++]
+         } else {
+           temp[p3++] = A[p2++]
+         }
+       }
+       while() {} // TODO
+       while() {} // TODO
+     }
+     for(i:0-(r-l+l)) {
+       A[l+i] = temp[i];
+     }
+   }
+** Problem 3
+1. If all the numbers are in the range, then how to sort.
+2. Write the pseudo code yourself
+3. The technique that we discussed in problem 1 and problem 2, is the same/similar technique is used in merge sort? (I don't know merge sort) 
