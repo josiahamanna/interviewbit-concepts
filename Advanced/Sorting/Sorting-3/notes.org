@@ -1,0 +1,61 @@
+* Sorting 3
+** Quick sort
+1. Given an array of N elements Rearrange the array such that arr[0] should go to its sorted position and all the elements smaller that arr[0] should go on left and all elements greater should go on right
+2. Given the array traverse it from index 1
+3. Take a extra space of N, maintain 2 pointers p1 = 0, p2 = N-1;
+4. Elements which are smaller than that of arr[0] put it in p1 and increment.
+5. Elements which are greater than that of arr[0] put it in p2 and decrement.
+6. Can we avoid taking extra space?
+7. Let's try to do it the same array.
+8. Same thing again traverse from index 0. If arr[p1] is lesser than arr[0] then check arr[p2]. If arr[p2] has element lesser than arr[0] then swap arr[p1] and arr[p2], else decrement p2. If arr[p1] is lesser than that of arr[0] then increment p1.
+9. Stop when p1 and p2 cross each other.
+10. arr[0] is left, so swap it with arr[p1-1]; we can also do it with p2.
+11. Pseudo code
+    p1 = 1, p2 = n-1;
+    while(p1 <= p2) {
+      if(arr[p1] <= arr[0]) {
+        p1++;
+      } else if(arr[p2] > arr[0]) {
+        p2--;
+      } else {
+        swap(arr[p1, p2])
+        p1++; p2--;
+      }
+    }
+    swap(arr[0], arr[p1-1]);
+12. Given with range (l, r) => We have to rearrange for this sub array.
+13. We will rearrange on the basis of arr[l].
+14. We have to return the new position of arr[l]; we will see why later.
+15. Now take the original array and see where arr[0] got placed.
+16. We can say that if we separately sort the elements on the left and right, we sort the whole array.
+17. Pseudo code
+    quick_sort(arr[], l, r) {
+      if(l > r) return;
+      int index = rearrange(arr, l, r)
+      quick_sort(arr, l, index-1)
+      quick_sort(arr, index+1, r);
+    }
+18. TC
+    Here we can't decide how we divide the problem. Because it is dependent on pivot index.
+    Worst case we will have N as height. So TC will be N^2
+    Best case will be if the pivot is exactly in middle. Then we have log(N) as height. So it will be Nlog(N)
+19. Randomized quick sort: We chose the random pivot. (We actually were choosing ar[0] and the moving forward, just chose random and proceed);
+** Problem 1
+1. Given an array of N elements find the sum of (max-min) for every sub sequence.
+2. We can say summation(maxs-mins) => summation(maxs) - summation(mins).
+3. Whenever you have summation, we can think of contribution technique.
+4. See in how many sub sequences any element is maximum.
+5. Select an element, say x. See how may elements are smaller than that. Because in those sub sequences only you will get x as maximum. Number of sub sequences will be 2 ^ (number of elements smaller than x) * x.
+6. How can you easily find out how many elements are less than x? Sort it.
+7. But here in sub sequences order matter. But even though order is changed if we sorted, the elements are same. We are only interested elements.
+8. Same this goes to count mins. 2^(N-i-1) * arr[i].
+9. Final ans = arr[i] * (2^i - 2^(n-i-1));
+10. TC: Nlog(N).
+** Redix sort.
+1. To extract a digit from a number, we can do N/2^i % 10.
+2. 361, 432, 12, 78, 500, 112, 2 : sort this array according to 10th place
+3. 500, 2, 12, 112, 432, 361, 78 : stable sort
+4. Build an 2D array or something and build on single iteration.
+   Get all the elements again by iterating on that 2D array.
+   It will be sorted right?
+5. 
