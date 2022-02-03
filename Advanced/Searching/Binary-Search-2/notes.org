@@ -1,0 +1,122 @@
+* Binary Search 2
+** Problem 1
+1. Given a roteted sorted array with distinct elements. Search given element k.
+2. Rotation:
+   1, 2, 3, 4, 5, 6, 7
+   Rotate once: 2, 3, 4, 5, 6, 7, 1
+   Rotate twice: 3, 4, 5, 6, 7, 1, 2
+   Rotate thrice: 4, 5, 6, 7, 1, 2, 3
+3. Brute Force: Linear search
+4. We cannot apply binary search directly.
+5. Observation:
+   1. There is two sorted parts.
+   2. We have to find where our k lies. (On which part)
+   3. Lets call our two parts as right and left.
+   4. We can say, all our element in right part will be smaller than arr[0]
+   5. We can also say, all our element in left part will be greater then or equal to arr[0]
+   6. If we can get the first element in our right part, we can get rotation point.
+      Let's call it t
+      (0 -> t-1) (t -> n-1)
+   7. We can get t by binary search (comparing the element with arr[0])
+      #+begin_src c
+        int l = 0, r = size(arr)-1, t;
+
+        while(l <= r) {
+          int mid = (l+r)/2;
+          if(arr[mid] > arr[0]) {
+            l = mid+1;
+          } else {
+            t = mid;
+            r = mid-1;
+          }
+        }
+      #+end_src
+   8. Once we get t apply binary search on appropriate part.
+6. But in the above solution we do two passes of binary search.
+   One is to find t, i.e., to find first occurrence of the right part
+   Second is to find k.
+7. We can also solve this in single pass as well.
+   1. Directly apply binary. We have to handle three cases
+      if arr[mid] == k; we are done;
+      if arr[mid] >= arr[0]; that means we are in the left part
+      if arr[mid] < arr[0]; that means we are in the right part
+   2. if arr[mid] >= arr[0]
+      - B >= A[0] && B < A[mid] move to left else right
+   3. if arr[mid] >= arr[0] 
+      - B > A[mid] && B <= A[A.length - 1] move to right else left
+** Problem 2
+1. Find square root of positive integer N (only the integral part).
+2. Brute force i*i <= n
+3. We have the target. Now we need to find out search space.
+4. We can also get the boundary, i.e., 1 and N.
+5. Code
+   #+begin_src c
+     int l = 1, r = A, result = -1;
+     while(l <= r) {
+       int mid = (l+r)/2;
+       if(mid*mid === A) {
+         result = mid;
+         break;
+       } else if(mid * mid > A) {
+         r = mid-1;
+       } else {
+         result = mid;
+         l = mid+1;
+       }
+       return result;
+     }
+   #+end_src
+** Problem 3
+1. Given an array of positive integers, find maximum k such that there is no subarray of length k with sum > B
+2. Brute force: Find the subarray sum with length 1, 2, 3, and so on
+   Stop where you get more than B
+3. What is our search space? 1 - N
+4. If all the subarray of length mid have a sum <= B
+5. Then ans = mid; l= mid+1
+6. Else r = mid-1
+7. code
+   #+begin_src c
+     bool check(int A, int k, int B) {
+       int sum = 0;
+       for(int i = 0; i <= k; i++) {
+         sum += A[i];
+       }
+       if(sum < B) return false;
+       for(i = k; i < N; i++) {
+         sum += arr[i] - arr[i - k];
+         if(sum < B) return false;
+       }
+       return true;
+     }
+
+     int l = 1, r = N;
+     while(l <= r) {
+       int mid = (l+r)/2;
+       if(check(A, mid, B)) {// returns true if all subarrays of length mid <= B
+         ans = mid;
+         l = mid+1;
+       } else {
+         r = mid-1;
+       }
+     }
+
+     return l;
+   #+end_src
+** Problem 4
+1. Find Nth Magical number. Given A and B, find Nth multiple of A or B.
+   Example: A = 2 and B = 3 find N = 8;
+   Answer: 12
+2. Brute force: Start from 1 to infinity
+   if(i % A === 0 || i % B === 0) count++; till count === N
+3. Can we bring down upper bound (which is infinity now)?
+   1. Let say a < b
+   2. we can go till min(a, b)*N
+   3. And also you can also start with min(a, b)
+4. Let's apply binary search for this search space
+   1. Go to mid and ask are my Nth multiple?
+      We can only say that if from l to mid there are N multiples
+      if it so it's a candidate ans, update it, and go to left
+   2. If mid < n then our answer lies in right part
+   3. If mid > n then our answer lies in left part
+   4. 
+   

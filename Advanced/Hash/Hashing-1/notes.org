@@ -1,0 +1,5 @@
+* Hashing 1
+** Problem
+1. Given an integer array, find any pair (i, j) such that j > i A[i] === A[j] && (j-i) is minimum
+2. <key, value> => element, last index
+3. 

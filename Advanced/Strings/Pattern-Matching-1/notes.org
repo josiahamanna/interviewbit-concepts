@@ -1,0 +1,91 @@
+* Pattern Matching 1
+** Z Algorithm
+1. Given a string s, for every index i, find the length of longest substring from it which is equal to prefix of whole index.
+2. x x y z x x y z w x x y z x x y z x
+   if you go to the 13th index, the longest substring is 5
+   if you go to index 5th index, the longest substring is 1
+   For index 0 the value is 18 (length of the input string)
+3. So for all index
+   0: 18
+   1: 1
+   2: 0
+   3: 0
+   4: 4
+   5: 1
+   6: 0
+   7: 0
+   8: 0
+   9: 8
+   10: 1
+   11: 0
+   12: 0
+   13: 5
+   14: 1
+   15: 0
+   16: 0
+   17: 1
+   These values are called z array.
+4. Brute force: We can say z[0] is the length of the array. We need to find z value for i = 1 -> N.
+   #+begin_src c
+     z[0] = length;
+
+     for(i = 1; i < N; i++) {
+       int j = i;
+       while(j < N && s[j] == s[j-i]) {
+         j++;
+       }
+       z[i] = j-i;
+      }
+   #+end_src
+5. Optimized:
+   1. Region from 0-7 and region from 9-16 are same.
+   2. And now we need to find the z value for 10.
+   3. 10 have a brother that is index 1.
+   4. So 10 will have the same situation as index 1. We don't have to compute it again. We can directly take the z value of 1 and put it in 10.
+   5. Continue like wise and till index 12. Now you come to x in 13, brother is at 4. But 4th x can only ouch for 4 more character not more than that.
+   6. For the next element (going further) we need to again apply brute force method.
+   7. So let's start from Beginning
+      1. for oth index it is 18.
+      2. For 1 index, we have to apply the brute force.
+      3. For 1 and 3 you have to apply brute force.
+      4. For 4 index again brute force. create two pink boxes.
+   8. Case 1: When you don't know anything i.e., you are out of the pink region. Then brute force
+   9. Case 2: Inside the pink box
+      1. Copy if the z value is less than boundary
+      2. Copy the z value if it is touching the boundary. Apply brute force for the remaining elements.
+      3. If the z value is exceeding the boundary, then take only what is required and apply brute force for the remaining elements.
+   10. Whenever you will brute force update the pink box.
+6. Pseudo code
+   #+begin_src c
+     int L = 0, R = 0;
+     int Z[0] = N;
+
+     for(let i = 1; i < N; i++) {
+       // out side the segment or not
+       if(i > R) {
+         L = i; R = i;
+         while(R<N && s[R] == s[R-L]) {
+           R++;
+         }
+         z[i] = R-L;
+         R--;
+       } else {
+         // identify the brother
+         int j = i-L; // corresponding element.
+         if(z[j] < R-i+1) {
+           z[i] = z[j];
+         } else if (z[j] > R-i+1) {
+           L = i;
+           R++;
+           while(R<N && s[R] == s[R-L]) {R++;}
+           z[i] = R-L;
+           R--;
+         }
+       }
+     }
+
+   #+end_src
+7. TC is O(N). i, L and R are moving continuously forward. It is not reset. So total 3N iterations.
+** Problem 1
+1. Given a string S and a pattern t. Find if there exists a substring that matches the pattern t.
+2. 
