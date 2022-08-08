@@ -88,4 +88,29 @@
 7. TC is O(N). i, L and R are moving continuously forward. It is not reset. So total 3N iterations.
 ** Problem 1
 1. Given a string S and a pattern t. Find if there exists a substring that matches the pattern t.
-2. 
+2. Example:
+   1. S: mynameismohit
+   2. t: mei
+3. BF: Compare all length 3 string with t.
+4. Improved: Apply z-algo here.
+   Before that slight modification => append t and S.
+   To keep a border between them place a special character.
+   For the above example: mei$mynameismohit
+5. After constructing the z-value array, find whether there exist length of t in that array. 
+** Problem 2
+1. Given two strings A and B, find the number of times B occurs in A as a substring.
+2. Same logic as Problem 1. Just find how many times length is there in z-value array.
+** Problem 3
+1. Given a binary string, find all the cyclic permutations of the string such that, B^cyclic permutation = 0.
+2. Example:
+   B = 1 0 1 0
+   Applying cyclic permutation
+   0 1 0 1
+   1 0 1 0
+   0 1 0 1
+   So here 4 permutations are there, the answer is 2.
+3. We will not be doing the permutations, but we will append B to B (leave the last element)
+   1 0 1 0 1 0 1 
+   in this how many sub string match with B i.e., 1 0 1 0
+   Same as above problem, again append B in the front with spacial character in between.
+   1 0 1 0 $ 1 0 1 0 1 0 1

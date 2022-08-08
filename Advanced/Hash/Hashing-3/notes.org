@@ -19,7 +19,7 @@
    2. Both character are adjacent to each other in English alphabet
 3. Brute force: Generate all permutations and check.
 4. TC: N!*N
-5. Optimized way.
+5. Optimized way. 
    1. Odd characters and even characters don't have to be rearranged.
    2. Now merge the two set.
    3. Find smallest odd and largest odd. Find smallest even and largest even.
@@ -63,4 +63,6 @@
    1. Calculate frequency array/HM for string A.
    2. Consider this array as a requirement array.
    3. When you encounter a character update your requirement as well.
+
+  9650 9415
 
