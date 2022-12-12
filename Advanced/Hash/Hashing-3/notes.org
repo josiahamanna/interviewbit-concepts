@@ -64,5 +64,4 @@
    2. Consider this array as a requirement array.
    3. When you encounter a character update your requirement as well.
 
-  9650 9415
-
+0 1 2 3
