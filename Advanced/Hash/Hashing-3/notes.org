@@ -1,0 +1,67 @@
+* Problems on strings with Hashmaps
+** Problem 1
+1. Infinite stream of characters, after a new character comes, check if the current stream of characters forms a palindromic string or not. You cannot store the string, you cannot use extra space.
+2. a palindrome
+   ab not a palindrome
+   abc not
+   abcb not
+   abcba yes
+   abcbak not
+3. If a string S = reverse(S)
+4. Try to use hash function.
+5. Forward hash = backward hash.
+6. FH(new) = FH(old) + new_char*p^i
+7. BH(new) = BH(old)*p + new_char
+** Problem 2
+1. Given a string s, check if you can rearrange the string s such that there is no BORING sub string in s. Characters can be duplicate.
+2. Boring sub string:
+   1. Size = 2
+   2. Both character are adjacent to each other in English alphabet
+3. Brute force: Generate all permutations and check.
+4. TC: N!*N
+5. Optimized way. 
+   1. Odd characters and even characters don't have to be rearranged.
+   2. Now merge the two set.
+   3. Find smallest odd and largest odd. Find smallest even and largest even.
+** Problem 3
+1. Find length of longest sub string which contains all unique/distinct characters.
+2. Brute force: consider all possible sub string.
+3. Binary search also be applied (sliding window).
+4. Two pointer approach.
+   #+begin_src c
+      l = 0, r = 0;
+
+      if(current element is already present in set) {
+        maxl = max(maxl, r-l);
+        while(arr[l] !== curr_ele) {
+          // remove your arr[l] from set
+          l++;
+        }
+        l++;
+       } else {
+        // insert in set and increase window
+        r++;
+       }
+   #+end_src
+5. Rather than the while loop, you can store the last occurrence in hash map.
+   1. Detect duplicate with right conditions.
+      When your previous last occurrence index is present inside the window
+   2. Don't forget to update your map.
+   3. Now you can directly jump to previous occurrence index + 1.
+** Problem 4
+1. Count all permutations of A in B as a sub string.
+2. Brute force: Generate all permutations.
+3. TC: M!*N.
+4. In a permutation same set of elements are just rearranged.
+5. Optimized way 1.
+   1. Calculate frequency array/HM for string A.
+   2. Build frequency array for first window of size A in B.
+   3. Traverse the frequency, if everything matches count++.
+   4. For every window you have to traverse 26 characters max.
+   5. TC: O(26N)
+6. Optimized way 2.
+   1. Calculate frequency array/HM for string A.
+   2. Consider this array as a requirement array.
+   3. When you encounter a character update your requirement as well.
+
+0 1 2 3

@@ -1,0 +1,83 @@
+* Stacks 1
+** What are stacks?
+    1. Last in first out (LIFO)
+    2. Real world examples:
+        1. Undo and redo follow stacks.
+        2. Bowser history.
+        3. Recursive funtion while calculating fibonachi number.
+
+** Operations by stack:
+    1. push(x): Insert the data x at top.
+    2. pop(): Delete the data from top.
+    3. top(): Access to top most element.
+    4. isEmpty(): If stack is empty.
+
+** Implementation of stack:
+    1. It is a linear data structure.
+    2. Basic Implementation using *Arrays*.
+        1. We need a pointer which will tell us top most position.
+        2. Initially top is at -1
+        3. When you push an element, increment top and do arr[top] = x;
+           #+BEGIN_SRC javascript
+           push(x) {
+            top++;
+            arr[top] = x;
+           }
+           #+END_SRC
+        4. When you pop an element, decrement top pointer.
+           #+BEGIN_SRC javascript
+           pop() {
+            top--;
+           }
+           #+END_SRC
+        5. Checking isEmpty
+           #+BEGIN_SRC javascript
+           isEmpty() {
+            if(top == -1) 
+                return true
+            else 
+                return false
+           }
+           #+END_SRC
+    3. Issue with Array implementation is wastage of memory.
+    4. *Linked-list* Implementation of stacks.
+        1. Every node will consist of next pointer and data field.
+        2. Every time a new node is pushed, create a link to head and make new node as head.
+        3. For poping, just do head = head.next
+
+** Problem 1
+Sort the stack using another stack.
+1. Lets say S1 is the given stack. S2 is empty.
+2. If you can put elements in S2 in descending order then easily you can build S1 in ascending order.
+3. Time complexity will be O(n^2)
+#+begin_src C
+  while(!s1.isEmpty()){
+      int x = s1.top();
+      s1.pop();
+      while(!s2.isEmpty() && x < s2.top()) {
+          temp = s2.top()
+          s1.push(temp);
+          s2.pop();
+      }
+      s2.push(x);   
+  }
+  // move all the element back to s1
+#+end_src
+4. What if you have to only use push and pop operations, nothing else?
+** Problem 2
+Implement 2 stacks using a single array.
+1. If you assign even and odd index for two stacks, you will fix the limit. So, even if you have space, you will restrict size.
+2. You can do this: start from one end for s1, and start for another end for s2.
+** Problem 3
+Implement a stack with special operation, i.e., getMin() with O(1) complexity. You have to return min of all elements currently present in stack.
+- Maintaining the min variable, will create a problem while popping.
+  #+begin_src C
+    push() {
+      s1.push(x);
+      curr_min = min(curr_min, x);
+      minStack.push(curr_min);
+    }
+  #+end_src
+- Doing it in O(1) space.
+  1. We need to store two information in one place.
+  2. 

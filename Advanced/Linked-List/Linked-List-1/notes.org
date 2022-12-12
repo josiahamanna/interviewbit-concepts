@@ -1,0 +1,197 @@
+* Linked List 1
+1. It's a linear data structures which doesn't have contiguous memory allocation.
+2. Why do we need it?
+   - Fast insertion and fast deletion.
+3. If it is not contiguous, how to find their reference to their location.
+   - Each node stores the address of next node.
+   - Head will be given.
+   - Last node will have null as next address.
+4. How to create a node?
+   1. In c++ we have structures
+   2. In other languages we use class
+            #+begin_src c
+              class Node {
+                int data;
+                Node next;
+                Node(int x) {
+                  data = x;
+                  next = NULL
+                }
+              }
+            #+end_src
+
+** Problem 1
+1. Given with the LL (given with head node) find the kth element in LL. (k is like index).
+2. Traverse one by one. Write a loop.
+   #+begin_src c
+     Node temp = head;
+     while(temp != NULL && k > 0) {
+       // head = head.next; // if we do this we loose head, never do this untill configuration is changed
+       temp = temp.next;
+       k--;
+     }
+     if(temp != NULL)
+       return temp.data;
+     return -1;
+   #+end_src
+3. TC: O(N)
+** Problem 2
+1. Search an element k in the LL.
+2. In array we did linear search and binary search.
+#+begin_src c
+  Node temp = head;
+  while(temp != NULL) {
+    if(temp.data == k) {
+      return temp;
+    } else {
+      temp.next;
+    }
+  }
+  return NULL;
+#+end_src
+** Problem 3 Insertion
+1. Insert at head
+      #+begin_src c
+        Node x = new Node(k);
+        x.next = head;
+        head = x;
+      #+end_src
+2. Insertion at tail.
+   #+begin_src c
+     Node x = new Node(k);
+     temp = head;
+     if(head == NULL) {
+       head = x;
+       return x;
+      }
+     while(temp.next != NULL) {
+       temp = temp.next;
+     }
+     temp.next = x;
+   #+end_src
+3. Given with sorted linked list, insert such that the LL remains sorted.
+   #+begin_src c
+     Node x = new Node(k);
+     if(head == NULL)
+       return x;
+     Node temp = head;
+     if(head.data >= k) {
+       // do it yourself
+      }
+     while(temp.next.data < k && temp.next != NULL) {
+       temp = temp.next;
+      }
+     x.next = temp.next;
+     temp.next = x;
+   #+end_src
+** Problem 4 Deletion
+1. At the head
+   #+begin_src c
+     head = head.next
+   #+end_src
+2. At the tail
+   #+begin_src c
+     if(head == null || head.next == NULL) return NULL;
+     temp = head;
+     while(temp.next.next != NULL) {
+       temp = temp.next
+     }
+     temp.next = NULL
+   #+end_src
+3. At the first occurrence of k
+   #+begin_src c
+     if(head == NULL) return NULL;
+
+     if(head.data == k) {
+       // Delete head
+     }
+
+     temp = head;
+
+     while(temp.next != NULL) {
+       if(temp.next.data == k) {
+         temp.next = temp.next.next;
+         break
+       }
+       temp = temp.next;
+     }
+   #+end_src
+4. At the first occurrence of k consecutive
+   #+begin_src c
+     if(head == NULL) return NULL;
+
+     if(head.data == k) {
+       // Delete head
+      }
+
+     temp = head;
+
+     while(temp.next != NULL) {
+       if(temp.next.data == k) {
+         temp.next = temp.next.next;
+       } else {
+         temp = temp.next;
+       }
+      }
+   #+end_src
+** Problem 5
+Reverse the linked list without using extra space.
+prev -> current -> next
+1. next = current.next
+2. current.next = prev
+3. prev = current
+   current = next
+   #+begin_src c
+     nxt = NULL, prev = NULL, curr = head;
+
+     while(curr != NULL) {
+       nxt = curr.next;
+       curr.nxt = prev;
+       prev = curr;
+       curr = nxt;
+     }  
+
+     return prev;
+   #+end_src
+** Problem 6
+Reverse first k elements
+Ex 1 2 3 4 5 6 k = 4
+4 3 2 1 5 6
+#+begin_src c
+  prev = NULL, nxt = NULL, curr = head;
+
+  while(curr != null && k > 0) {
+    nxt = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = nxt;
+    k--;
+  }
+
+  head.next = curr;
+
+  return prev;
+#+end_src
+** COMMENT Problem 7
+Reverse every group of k size
+#+begin_src c
+  Node reverse(Node head, int k) {
+    if(head == NULL)
+      return NULL
+      
+    prev = NULL, nxt = NULL, curr = head;
+
+    while(curr != NULL && k > 0) {
+      nxt = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = nxt;
+      k--;
+    }
+
+    head.next = reverse(curr, k)
+  }
+
+  return prev
+#+end_src
+
