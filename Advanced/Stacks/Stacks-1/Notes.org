@@ -71,13 +71,50 @@ Implement 2 stacks using a single array.
 ** Problem 3
 Implement a stack with special operation, i.e., getMin() with O(1) complexity. You have to return min of all elements currently present in stack.
 - Maintaining the min variable, will create a problem while popping.
+- You can maintain a extra stack, minStack.
   #+begin_src C
     push() {
       s1.push(x);
       curr_min = min(curr_min, x);
       minStack.push(curr_min);
     }
+    getMin() {
+      minStack.top()
+    }
   #+end_src
 - Doing it in O(1) space.
-  1. We need to store two information in one place.
-  2. 
+  1. We need to store two information in one place (Location).
+  2. That is, the data and the min of all elements till that point.
+  3. When the first element comes, store the data as it is. Assign that data to curr_min.
+  4. When next element comes, if that element is lesser that curr_min, multiply the incoming element with 2 and subtract curr_min.
+     - x < curr_min
+     - x - curr_min < 0
+     - x - curr_min + x < x (add x both side)
+     - 2x - curr_min < x
+  5. While doing pop operation, if curr_min is greater than getTop(), then some thing is hidden there.
+     - prev_min = 2*curr_min - getTop()
+     - curr_min = prev_min
+     - Then do pop() operation.
+       #+begin_src C
+         push(x) {
+           if(x < curr_min) {
+             s.push(2*x - curr_min);
+             curr_min = x;
+           } else {
+             s.push(x)
+           }
+         }
+
+         pop() {
+           if(s.top() < curr_min) {
+             int pre_min;
+             prev_min = 2*curr_min - s.top();
+             curr_min = prev_min;
+           }
+           s.pop();
+         }
+       #+end_src
+** Problem 4
+Maximum frequency stack. Return the element with max freq and if two elements have same freq then return whichever is closest to the top.
+1. You need extra stack.
+2. You need hashmap for storing hash.
