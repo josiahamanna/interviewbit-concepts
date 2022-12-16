@@ -1,0 +1,23 @@
+* Stacks 2
+** Nearest small element
+For every index i, find the nearest element on left which is smaller than arr[i].
+For ex:    index:  0 1  2 3  4  5
+         element:  4 5  2 10 8  2
+nearest smallest: -1 4 -1 2  2 -1
+Brute force: For every index i, traverse from i-1 to 0 until you get a smaller element than a[i]
+             Complexity will be O(N^2)
+Improve: Maintain stack in increasing order.
+#+begin_src C
+  ans = [];
+  for(i = 0; i < n; i++) {
+    while(st.empty() && st.top() >= arr[i]) {
+      st.pop();
+    }
+    if(st.empty()) ans[i] = -1;
+    else ans[i] = st.top();
+
+    st.push([arr[i]]);
+   }
+#+end_src
+Complexity: every element is entering stack only once. So it is O(N).
+If the question is *nearest smaller element on the right* -> Iterate from right.
