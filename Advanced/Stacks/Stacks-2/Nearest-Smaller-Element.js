@@ -30,7 +30,7 @@ const solve = (A) => {
   let ans = [],
     s = [];
 
-  for (let i = 0; i < A.length; i++) {
+  for (let i = 0; i <= A.length; i++) {
     while (s[s.length - 1] > A[i] && s.length) {
       s.pop();
     }
