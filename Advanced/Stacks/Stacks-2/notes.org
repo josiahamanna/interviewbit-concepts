@@ -21,3 +21,22 @@ Improve: Maintain stack in increasing order.
 #+end_src
 Complexity: every element is entering stack only once. So it is O(N).
 If the question is *nearest smaller element on the right* -> Iterate from right.
+If the question is *nearest greater element on the left* -> The second condition in while loop changes to st.top() <= arr[i].
+If the question is *nearest greater element on the right* -> Iterate from right, and change the second condition in while loop to st.top() <= arr[i].
+We can also store the index
+#+begin_src C
+  for(i = arr.len -1; i > -1; i--) {
+    while(!st.empty() && arr[st.top()] >= arr[i]) {
+      st.pop();
+    }
+    if(st.empty()) ans[i] = -1; // Instead of -1 you can store n, because you are storing the index instead of actual values
+    else ans[i] = st.top();
+    st.push[arr[i]];
+  }
+#+end_src
+All four techniques can be used to solve following problem
+** Find the sum of max-min for all sub arrays
+1. Build nearest smaller arrays for left and right
+2. Build nearest largest arrays for left and right
+3. Iterate over the array and do this
+   ans += ((i-j)*(k-i) - (i-j')*(k'-j)) * arr[i];
