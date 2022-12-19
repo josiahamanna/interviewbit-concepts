@@ -40,3 +40,26 @@ All four techniques can be used to solve following problem
 2. Build nearest largest arrays for left and right
 3. Iterate over the array and do this
    ans += ((i-j)*(k-i) - (i-j')*(k'-j)) * arr[i];
+   j: min_left[i]
+   k: min_right[i]
+   j': max_left[i]
+   k': max_right[i]
+** Given histogram find the largest rectangle formed by contiguous histogram bars
+[[./histogram-example.png][Example]]
+area = base*height (Idea is to maximize the height).
+1. Go to each bar and fix it.
+2. Then calculate nearest smallest on the left, i.e., l.
+3. Then calculate nearest largest on the right, i.e., r.
+4. Then area will be (l-r-1)*arr[i].
+5. Do this is for every index in arr and find the maximum.
+** Problem
+Evaluating expression:
+1. *, / takes precedence on +, -
+2. Same precedence operations are evaluated from left to right
+3. operand op operand -> is infix expression
+4. In order to solve infix expression we need to traverse and find out which is having precedence.
+   This takes O(N^2) complexity
+5. To solve that we have something called prefix and postfix
+6. In order to convert to into postfix and prefix it takes O(N)
+
+   
