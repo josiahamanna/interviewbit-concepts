@@ -1,0 +1,130 @@
+* Queues-1
+** What is queue?
+1. Follows FIFO behaviour, insertion and deletion is happening in to ends
+2. Four operations
+   1. enqueue(x): insert at an end (rear)
+   2. dequeue(): delete from an end (front)
+   3. front(): Get element from front (to serve)
+   4. isEmpty()
+3. Implementation
+   1. Using arrays (This is just one of the implementation, you can have your own)
+      1. We need two ends
+         f = -1
+         r = -1
+      2. When an element enters increment r, arr[r] = x.
+         If size is fixed, then r == n-1, then over flow happens. 
+      3. When we need to remove element increment f.
+         Check for empty
+      4. When you need to access element from front, do a[f+1]
+         Check for empty
+      5. When f == r we can say queue is empty
+      6. This implementation has issues:
+         1. Once dequeued space is not used again
+         2. To resolve this we have two options: Linked list and Circular queue
+   2. *Circular* queue
+      1. Whenever we increment r, do (r+1)%n
+      2. But now f == r applies for both full and empty, we need to change that.
+      3. Maintain a variable size, which tells how many elements are there in the queue.
+      4. Pseudo Code
+      #+begin_src C
+        void enqueue(int x) {
+          if(size == N) {
+            // overflow
+          } else {
+            r = (r+1) % N;
+            arr[r] = x;
+            size++;
+          }
+        }
+
+        void dequeue() {
+          if(size == 0) {
+            // empty
+          } else {
+            f = (f+1) % N;
+            size--;
+          }
+        }
+
+        int front() {
+          if(size == 0) {
+            // empty
+          } else {
+            return arr[(f+1) % N]
+          }
+        }
+
+        bool isEmpty() {
+          if(size == 0) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      #+end_src
+   3. *Linked List* implementation of queue
+      1. Maintain two pointers: head and tail
+      2. Enqueue(x): insert at tail
+      3. dequeue(): just move head to head.next
+      4. front(): head.data
+** Implement queues using stacks
+1. Limitation is, you only have two operation, i.e., push and pop
+2. It doesn't matter what you do, but you have to get the right element when you call top.
+   Right as in, if it was a queue, and front is called, what element is expected is also expected when you call top.
+3. We can't implement using one stack, that is for sure. Lets say s1 and s2.
+4. Time complexity: enqueue(x) is O(1). dequeue() is O(1) on average (amortised), worst case is O(N). Front() is O(1).
+#+begin_src C
+  void enqueue(int x) {
+    s1.push(x);
+  }
+
+  void dequeue() {
+    if(s2.empty()) {
+      while(!s1.empty) {
+        s2.push(s1.top());
+        s1.pop();
+      }
+    }
+    s2.pop();
+  }
+
+  int front() {
+    if(s2.empty()) {
+      while(!s1.empty()) {
+        s2.push(s1.top());
+        s1.pop();
+      }
+    }
+    if(!s2.empty()) {
+      return s2.top();
+    }
+  }
+#+end_src
+** Get Nth number which is made up of '1', '2' and '3' digits.
+1. Example: 1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33, 111, 112, 113 ...
+2. BF: Start from 1, check is it is valid, increment count. When count reaches N, return that number.
+3. Solution:
+   1. Take 3 number (1, 2, 3) initially, construct 2 digit numbers.
+   2. 1 * 10 + 1, 1 * 10 + 2, 1 * 10 + 3. 1 can only give these three two digit numbers.
+   3. Start with 2 now. 2 * 10 + 1, 2 * 10 + 1, 2 * 10 + 3 and that's it. Go for three.
+   4. Every time you increase the number of digits, dequeue.
+      +1+, 2, 3, 11, 12, 13
+      +1+, +2+, 3, 11, 12, 13, 21, 22, 23
+      +1+, +2+, +3+, 11, 12, 13, 21, 22, 23, 31, 32, 33 and so on
+** Find Nth perfect number.
+1. Perfect number: Even length, palindrome, made up of 1 and 2.
+   11, 22, 1111, 1221, 2112, 2222, 111111, 121121
+2. Try brute force yourself.
+3. Focus on palindrome. It is made up of first part and reverse of first part appended to it, i.e., aa'
+   say a = 1 a' is also 1, append it, 11.
+   say a = 12, a' is 21, append it, 1221
+4. You no need to check for palindrome. You just have to generate the number.
+   Same as previous, a can be generated using previous problem.
+** Reverse a queue
+1. You can use an auxiliary array push elements from front of queue to array
+   then iterate from right end of the array and start constructing the queue.
+2. You can another queue.
+** Home work
+1. Implement stack using queue.
+2. Implement doubly ended queue.
+
