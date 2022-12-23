@@ -16,3 +16,43 @@
    TC for finding max in one window again is O(N)
    Total TC will be O(N^2)
 4. Let's consider ordered map.
+   <Look for yourself>
+5. Final solution using D-Queue
+   1. What is D-Queue?
+      1. D-Queue is a data structure with both features of stack and queue.
+      2. You can add elements from front and back, remove elements from front and back.
+   2. How to use this here?
+      1. Slide across the array with fixed window size
+      2. For the element i, check whether A[i] is lesser than dqueue[rear].
+         If so add A[i] to rear of dqueue
+         If not remove the element from rear of dqueue
+      3. Do this till you find an element greater than A[i] (or dqueue is empty), and then push A[i] to the rear of dqueue.
+      4. When the window moves we have to remove an element.
+         We do it only when front of queue is equal to A[i-B]
+      5. Ultimately you have to store the maximum, where is it?
+         It is nothing but the element in the front.
+      6. #+begin_src C
+         dqueue dq;
+
+         for(int i = 0; i < k; i++) {
+            while(dq.size>0 && dq.rear() < arr[i]) {
+                dq.pop_rear();
+            }
+            dq.push_rear(a[i]);
+         }
+
+         result.insert(dq.front());
+
+         for (int i = k; i < arr.size(); i++) {
+            while(dq.size>0 && dq.rear() < arr[i]) {
+                dq.pop_rear();
+            }
+            dq.push_rear(a[i]);
+
+            if(dq.front() === A[i-k]) {
+                dq.pop_front();
+            }
+
+            result.insert(dq.front());
+        }
+         #+end_src
