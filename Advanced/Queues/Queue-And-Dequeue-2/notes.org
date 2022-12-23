@@ -1,0 +1,18 @@
+#+title: Notes
+* Queue and Dequeue 2
+** Problem: Find sliding window maximum
+1. Given an array find maximum of all the subarrays of size k
+2. For example: [10, 1, 2, 9, 7, 6, 5, 11, 3], finding maximum for size k = 3 (Length: 9)
+   Subarrays
+   1. [10, 1, 2] -> max: 10
+   2. [1, 2, 9] -> max: 9
+   3. [2, 9, 7] -> max: 9
+   4. [9, 7, 6] -> max: 9
+   5. [7, 6, 5] -> max: 7
+   6. [6, 5, 11] -> max: 11
+   7. [5, 11, 3] -> max: 11
+3. Brute force: Find for all windows ()
+   TC for finding all windows is  O(N)
+   TC for finding max in one window again is O(N)
+   Total TC will be O(N^2)
+4. Let's consider ordered map.
