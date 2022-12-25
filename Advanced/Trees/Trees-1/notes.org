@@ -92,3 +92,21 @@ int size(Node root) {
   return lst + rst + 1;
 }
    #+end_src
+** Problem 2
+calculate height of a tree
+1. We can say ~height(root) = max(height(LST), height(RST))~
+2. When a sub tree has 0 child, we end up asking null for it's height.
+   We have to ~return -1~ in this case.
+   If we return 0, then we end up having 1 as height of leaf node.
+3. Pseudo
+   #+begin_src C
+int height(Node root) {
+  if(root === null)
+    return -1;
+
+  int lsh = height(root.left);
+  int rsh = height(root.right);
+
+  return max(lsh, rsh) + 1;
+}
+   #+end_src
