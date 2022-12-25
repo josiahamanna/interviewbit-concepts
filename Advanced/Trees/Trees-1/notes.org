@@ -1,2 +1,94 @@
 * Trees-1
-** 
+** Terminologies
+1. *Height of Node*: Distance from current node to to farthest leaf in its own subtree.
+   Here distance means, count of the edges to the farthest leaf.
+   Height of leaf node is zero.
+   Height of root node is nothing but height of the tree.
+   We can also say: Height of a node = max(height of all child) + 1
+2. *Depth of Tree*: Distance from root node.
+   Also Depth = Level
+   Depth of a tree will be equal to height of the tree.
+   Depth of root is 0.
+   Depth of a parent node will 1 minus depth of the child node
+3. *Binary tree*: Trees with at maximum of 2 children are called as binary trees.
+   Full/Proper binary tree (FBT): Every node has 2 or 0 children.
+   Complete binary tree (CBT): Every level are complete except for the last.
+   Last must be filled left to right.
+   [[./fbt-cbt-examples.png][examples]]
+   Perfect binary tree: Everything is tree.
+4. Implementation of binary tree
+   #+begin_src C
+class Node {
+  int data;
+  Node: left;
+  Right: right;
+}
+   #+end_src
+5.
+** Traversing BST
+1. *Inorder*
+   1. Traverse left sub tree
+   2. Take data of root
+   3. Traverse right sub tree
+   4. Pseudo code
+      #+begin_src C
+void inorder(Node root) {
+  if(root === null) {
+    return;
+  }
+
+  inorder(root.left);
+  print(root.data);
+  inorder(root.right);
+}
+      #+end_src
+2. *Preorder*
+   1. Take data of root
+   2. Traverse left sub tree
+   3. Traverse right sub tree
+   4. Pseudo code
+      #+begin_src C
+void inorder(Node root) {
+  if(root === null) {
+    return;
+  }
+
+  print(root.data);
+  inorder(root.left);
+  inorder(root.right);
+}
+      #+end_src
+3. *Postorder*
+   1. Traverse left sub tree
+   2. Traverse right sub tree
+   3. Take root's data
+   4. Pseudo code
+      #+begin_src C
+void inorder(Node root) {
+  if(root === null) {
+    return;
+  }
+
+  inorder(root.left);
+  inorder(root.right);
+  print(root.data);
+}
+      #+end_src
+4. We can observe that Preorder we are kinda move from top to bottom.
+   In post order we are going from bottom to top.
+** Problem 1
+calculate size of the tree, or calculate total number of nodes.
+1. We might think of using the ~traversing inorder~ code count variable and incriminating in place of printing it.
+   But here count variable can't be initialized inside the recursive function.
+   We can maintain a global variable and pass it around as a parameter, but it is not recommended.
+2. We can say ~size(tree) = size(LST) + size(RST) + 1~
+3. Pseudo code
+   #+begin_src C
+int size(Node root) {
+  if(root === null)
+    return 0;
+  int lst = size(root.left);
+  int rst = size(root.right);
+  return lst + rst + 1;
+}
+   #+end_src
