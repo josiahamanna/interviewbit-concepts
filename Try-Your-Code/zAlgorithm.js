@@ -1,21 +1,19 @@
 const solve = (A) => {
 
- let result = [];
-    for (let i = 0; i < A.length; i++) {
-    let j = 0,
-      k = i,
-      count = 0;
-    while (A[j] === A[k] && j < A.length) {
-      count++;
-      j++;
-      k++;
+  const test = (A) => {
+    if(A.length === 3) {
+      A.push(0);
+      return;
     }
-    result.push(count);
+    A.push(A[A.length-1] + 1);
+    test(A)
   }
 
-  return result;
+  test(A)
+
+  return A;
 };
 
-const A = "xxyzxxyzwxxyzxxyzx";
+const A = [];
 
 console.log(solve(A));

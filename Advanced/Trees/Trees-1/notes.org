@@ -24,7 +24,6 @@ class Node {
   Right: right;
 }
    #+end_src
-5.
 ** Traversing BST
 1. *Inorder*
    1. Traverse left sub tree
@@ -48,14 +47,14 @@ void inorder(Node root) {
    3. Traverse right sub tree
    4. Pseudo code
       #+begin_src C
-void inorder(Node root) {
+void preorder(Node root) {
   if(root === null) {
     return;
   }
 
   print(root.data);
-  inorder(root.left);
-  inorder(root.right);
+  preorder(root.left);
+  preorder(root.right);
 }
       #+end_src
 3. *Postorder*
@@ -64,13 +63,13 @@ void inorder(Node root) {
    3. Take root's data
    4. Pseudo code
       #+begin_src C
-void inorder(Node root) {
+void postorder(Node root) {
   if(root === null) {
     return;
   }
 
-  inorder(root.left);
-  inorder(root.right);
+  postorder(root.left);
+  postorder(root.right);
   print(root.data);
 }
       #+end_src
@@ -98,7 +97,7 @@ calculate height of a tree
 2. When a sub tree has 0 child, we end up asking null for it's height.
    We have to ~return -1~ in this case.
    If we return 0, then we end up having 1 as height of leaf node.
-3. Pseudo
+3. Pseudo code
    #+begin_src C
 int height(Node root) {
   if(root === null)
@@ -110,3 +109,49 @@ int height(Node root) {
   return max(lsh, rsh) + 1;
 }
    #+end_src
+** Problem 3
+Find K element if exists in the tree. Return true if so.
+This is nothing but a traversal problem.
+#+begin_src C
+boolean search(Node root) {
+  if(root === null)
+    return false;
+
+  if(root.data === K) {
+    return true
+  }
+
+  boolean lst = search(root.left);
+
+  if (!lst)
+    boolean rst = search(root.right);
+
+  // return search(right.root) || search(right.root)
+  return lst || rst;
+}
+#+end_src
+** Problem 4
+After finding k (continuation of previous problem) find path from root to element.
+You can assume there are distinct element.
+If a node is returning true that means that the node belongs to that path.
+We have to maintain a extra space for storing that path information (parameter or global).
+#+begin_src C
+array findPath(root, k, path) {
+  if(root === null) {
+    return false;
+  }
+
+  if(root.data === k) {
+    path.insert(root);
+    return true;
+  }
+
+  if(search(root.right) || search(root.left)) {
+    path.insert(root.data);
+    return true;
+  }
+
+  return false;
+}
+#+end_src
+Finally you have to return path.
