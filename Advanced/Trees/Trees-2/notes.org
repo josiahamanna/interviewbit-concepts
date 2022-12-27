@@ -1,0 +1,4 @@
+#+title: Notes
+* Trees 2
+** Treversing tree level by level
+1. It may be right to left or left to right, or alternative.
