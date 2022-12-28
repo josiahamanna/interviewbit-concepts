@@ -2,3 +2,44 @@
 * Trees 2
 ** Treversing tree level by level
 1. It may be right to left or left to right, or alternative.
+2. [[./level-order-traversal-example.png]]
+3. Recursion will not help us here. Becuase we cannot expect a esub problem (say to left) to give us the right result.
+4. Let's take a magical box (we don't know the DS yet) and traverse.
+   1. Visit three and get the children: [ 3, 7, 4 ].
+   2. After visiting 3 (and getting the children), we no more need three. So remove it: [ +3+, 7, 4 ].
+   3. Now we visit 7, get the children: [ +3+, 7, 4, 9 ].
+   4. After visiting 7, we no longer require it: [ +3+, +7+, 4, 9 ].
+   5. Now visit 4, and get the children: [ +3+, +7+, 4, 9, 14, 18 ].
+   6. After visiting 4, we no longer require 4: [ +3+, +7+, +4+, 9, 14, 18 ].
+   7. And so on. We are inserting at the rear, and removing from front.
+   8. Pseudo code.
+      #+begin_src C
+array<int> levelOrderTraversal (Node root) {
+  queue<Node> q;
+  q.enqueue(root);
+  array<int> result;
+
+  while(!q.empty()) {
+    Node front = q.front();
+
+    q.dequeue();
+
+    result.push(front);
+
+    if(front.left != null) q.enqueue(temp.left);
+    if(front.right != null) q.enqueue(temp.right);
+  }
+
+  return result;
+}
+      #+end_src
+   9. TC: O(N); SC: O(N) {At a time it will hold one level only, max number of nodes at any level }
+   10. Slight change in the requirement. We need to print level by level. In the above code we print it without any line break.
+       1. First we know only one data will be there. So we can hard code it. Queue = [FirstNode, null]
+       2. So when you build the queue, it will look like this. [3, null, 7, 4, null, 9, 14, 18, null]. You can build an array respectively or add line break.
+       3. But here while loop cannot run till queue has single element. It will go to infinite loop. You need to terminate the while loop there is only one element. (null will be the last remaining element)
+   11. What if we need to right to left level order traversal? Just inter change the en-queue process of left and right.
+   12. How to get only left view?
+       1. You know how to get two dimensional array, in that you can only choose first element of the inner array.
+       2. But what if the interviewer asks you not use extra space?
+       3. Then maintain a previous pointer. (Do a dry run)

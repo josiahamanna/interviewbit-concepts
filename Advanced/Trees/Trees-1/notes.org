@@ -14,8 +14,8 @@
    Full/Proper binary tree (FBT): Every node has 2 or 0 children.
    Complete binary tree (CBT): Every level are complete except for the last.
    Last must be filled left to right.
-   [[./fbt-cbt-examples.png][examples]]
-   Perfect binary tree: Everything is tree.
+   [[./fbt-cbt-examples.png]]
+   Perfect binary tree: Everything in tree.
 4. Implementation of binary tree
    #+begin_src C
 class Node {
