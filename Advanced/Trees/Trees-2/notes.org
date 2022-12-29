@@ -29,7 +29,6 @@ array<int> levelOrderTraversal (Node root) {
     if(front.left != null) q.enqueue(temp.left);
     if(front.right != null) q.enqueue(temp.right);
   }
-
   return result;
 }
       #+end_src
@@ -43,3 +42,69 @@ array<int> levelOrderTraversal (Node root) {
        1. You know how to get two dimensional array, in that you can only choose first element of the inner array.
        2. But what if the interviewer asks you not use extra space?
        3. Then maintain a previous pointer. (Do a dry run)
+   13. How to get only right view?
+       1. You can reverse the order (right to left), then the problem is same as above.
+       2. Another is checking for next. (after dequeue check for next if it is null)
+** Vertical level order traversal
+1. Vertical level traversal represents the distance from the root.
+   1. Consider root is in 0th distance.
+   2. Root's left child will be in 0-1 = -1 level
+   3. Root's right child will be in 0+1 = +1 level
+2. Refer the following figure
+   [[./vertical-order-traversal.png]]
+3. Generalized
+   [[./vertical-order-traversal-generalised.png]]
+4. How to you get traverse?
+   1. First you need to assign distance from root for all the nodes. Refer the above diagram.
+   2. While assigning the distance, maintain a hash map {distance: [vertices]}
+   3. For vertices to be on correct order you need to decide the right traversal (preorder, inorder, postorder, level order).
+   4. Only level order traversal can put vertices into the hash map to the corresponding distance in right order.
+5. Pseudo code.
+   #+begin_src C
+array<int> verticalOrderTraversal(Node root) {
+  map<int, array<int>> hm;
+  queue<set<node, int>> q;
+  array<int> result;
+
+  int minLevel = MAX_INT;
+  int minLevel = MIN_INT;
+
+  q.enqueue(root);
+
+  while(!q.empty()) {
+    Node temp = q.dequeue();
+
+    Node curr = temp.first();
+    int level = temp.second();
+
+    minLevel = Min(minLevel, level);
+    maxLevel = Max(minLevel, level);
+
+    hm[level].insert(curr.val);
+
+    if(curr.left) q.enqueue(curr.left);
+    if(curr.right) q.enqueue(curr.right);
+  }
+
+  for(let i = minLevel; i <= maxLevel; i++) {
+    for(let j = 0; j < hm[i].size(); j++) {
+      result.insert(hm[i][j]);
+    }
+  }
+
+  return result;
+}
+   #+end_src
+6. Now top view and bottom view do it yourself
+** Construct the unique tree given any order traversal.
+1. Preorder
+   1. One thing is sure, given preorder the first element will be the root of the tree we are going to construct.
+   2. But no way you can know the left child of it. If they give the null information you can, otherwise you cannot.
+   3. Because, the tree might be skewed.
+2. Postorder:
+   1. You an find the root, i.e., the last element.
+   2. But you cannot construct the unique tree if they don't give you null information.
+3. Inorder:
+   1. You cannot find the root, also cannot construct the unique tree.
+   2. If root is given, you can infer that the elements which are left to it will be on left subtree and elements which are right to it will on right subtree.
+4. What if two orders are given, i.e., preorder and inorder?
