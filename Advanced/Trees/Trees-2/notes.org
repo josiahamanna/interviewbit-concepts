@@ -1,6 +1,6 @@
 #+title: Notes
 * Trees 2
-** Treversing tree level by level
+** Traversing tree level by level
 1. It may be right to left or left to right, or alternative.
 2. [[./level-order-traversal-example.png]]
 3. Recursion will not help us here. Becuase we cannot expect a esub problem (say to left) to give us the right result.
@@ -77,13 +77,20 @@ array<int> verticalOrderTraversal(Node root) {
     Node curr = temp.first();
     int level = temp.second();
 
-    minLevel = Min(minLevel, level);
-    maxLevel = Max(minLevel, level);
+    if(hm[level]) {
+      hm[level].insert(curr.val);
+    } else {
+      hm[level] = [curr.val];
+    }
 
-    hm[level].insert(curr.val);
-
-    if(curr.left) q.enqueue(curr.left);
-    if(curr.right) q.enqueue(curr.right);
+    if(curr.left) {
+      q.enqueue(curr.left);
+      minLevel = Min(minLevel, level);
+    }
+    if(curr.right) {
+      q.enqueue(curr.right);
+      maxLevel = Max(minLevel, level);
+    }
   }
 
   for(let i = minLevel; i <= maxLevel; i++) {
@@ -108,3 +115,42 @@ array<int> verticalOrderTraversal(Node root) {
    1. You cannot find the root, also cannot construct the unique tree.
    2. If root is given, you can infer that the elements which are left to it will be on left subtree and elements which are right to it will on right subtree.
 4. What if two orders are given, i.e., preorder and inorder?
+   1. You will get the root from preorder, i.e., the first element.
+   2. You can search for that element in inorder and infer that left part belongs left sub tree of the root and right part belongs to right sub tree of the root.
+   3. You can repeat doing this and construct the whole tree, i.e., recursive function.
+   4. Example below
+      [[./01-contructing-tree-from-pre-and-in-order.png]]
+      - Blue is preorder.
+
+      [[./02-contructing-tree-from-pre-and-in-order.png]]
+      - Black is inorder
+
+      [[./03-contructing-tree-from-pre-and-in-order.png]]
+      - You don't send the array as the parameter, instead send the indexes.
+   5. Pseudo code
+      #+begin_src C
+Node construct(int pre[], int ps, int pe, int in[], int ins, int ine) {
+  if(ps > pe) {
+    return NULL;
+  }
+
+  Node root = new Node(pre[ps]);
+
+  int index = -1;
+
+  for(int i = ins; i <= ine; i++) {
+    if(in[i] === pre[ps]) {
+      index = i;
+      break;
+    }
+  }
+
+  int x = index - ins;
+
+  root.left = construct(pre, ps+1, ps+x, in, ins, index - 1);
+  root.right = construct(pre, ps+x+1, pe, in, index + 1, ine);
+
+  return temp;
+}
+      #+end_src
+   6. TC: O(N^N) for all elements you are searching for index, N * N. You can optimize it using HM, which can be helpful for finding index.
