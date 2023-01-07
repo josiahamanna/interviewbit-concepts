@@ -1,0 +1,29 @@
+* Binary Search 3
+** Problem 1
+1. Given N cow stalls, M cows, A[i] position of each stall in ascending order. Maximise the minimum distance between cows.
+2. Brute force: Try and generate all the possible configuration.
+   NCM ways we can chose the stalls.
+3. We can also go by how we used to solve the square root problem.
+   We can first place the cow 1 distance apart
+   Then increase the distance.
+   Do this until we cannot place the cows in given stall.
+4. Binary search can be applied. Target is distance.
+5. Search space:
+   1. The distance between two cows can be placing two cows in extreme end.
+   2. The minimum distance is 1.
+6. Now we need to check whether we can make a decision or not.
+   1. We go to mid and check mid is answer or not.
+   2. If we can not place with mid distance then we can discard right part.
+   3. If we can then also we are going to discard the left and update candidate solution.
+** Problem 2
+1. Given N tasks, K workers, array -> A[i] = time taken to complete ith task. Find minimum time to complete all tasks.
+   One task can only be done by 1 person.
+   A worker can only do continuous tasks.
+   Workers can work in parallel
+2. Here we have to minimise the maximum time taken by all worker workers.
+3. Brute force: We try to find all the configuration of workers doing the work.
+4. Optimised way:
+   1. Target: maximum time the worker can take. (answer will be minimum of those options)
+   2. Search space:
+      r = sum of all array elements
+      l = max element in the array

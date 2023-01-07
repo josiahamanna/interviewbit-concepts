@@ -1,0 +1,92 @@
+#+title: Notes
+* Binary Search Tree - 1
+** What is it?
+1. It is nothing but a binary tree (with zero, one or three nodes).
+2. The criteria is every node's LST must contain smaller elements and RST must contain greater elements.
+3. Examples
+   [[./screenshots/not-a-bst-1.png]]
+   [[./screenshots/not-a-bst-2.png]]
+   [[./screenshots/yes-a-bst-1.png]]
+   [[./screenshots/yes-a-bst-2.png]]
+4. If you have a BST you can infer that inorder traversal will be sorted.
+5. If you want to find the smallest element, go to left as much as possible, when there is no more left node, it is your smallest element.
+6. Same thing applies to the greatest element, just go to the farthest right.
+** Search k in BST
+[[./screenshots/search-k-in-bst.png]]
+1. Unlike normal binary tree we can make use of property of BST.
+2. We can decide which node to go (left or right) just by comparing k with node value.
+3. If we hit null we can conclude that k is not present in the binary tree.
+4. We can also insert it in the right position (if asked).
+5. Here we can understand the *advantage of BST*, i.e., if we have a stream of data array is not the best idea to store the values. Because we have to again and again sort the data. In tree we can traverse the tree and insert the element in the right position.
+6. Pseudo code
+   #+begin_src C
+bool search(Node root, int k) {
+  Node temp = root;
+
+  while(temp != NULL) {
+    if(temp.data == k) return true;
+    else if(temp.data > k) temp = temp.left;
+    else temp = temp.right;
+  }
+
+  return false;
+}
+   #+end_src
+7. TC will be O(height) and in the worst case height will be equal to N. But in a dense balanced tree the height will be log(N). How?
+   1. Each level will contain 2 to the power of level element, i.e., 2^L.
+   2. The roots level is 0. 2^0
+   3. The next level will have 2^1 elements and so on.
+   4. N = 2^0 + 2^1 + 2^2 + 2^3 + 2^4 . . . 2^h (h is height)
+   5. Left hand side is the GP. Sum is (a*(r^n - 1))/(r-1).
+   6. Here in our case a = 2^0 => 0, r = 2, n = h + 1
+      [[./screenshots/find-k-in-bst-tc.png]]
+
+** Insert k in right position
+1. Same as above, additionally we are maintaining a previous pointer.
+2. If we get the element already present in the tree we just return true.
+3. Else we check where should new Node(k) to be attached to previous node by comparing k by previous.data.
+   #+begin_src C
+bool search(Node root, int k) {
+  Node temp = root;
+  Node pointer = NULL;
+
+  while(temp != NULL) {
+    previous = temp;
+    if(temp.data == k) return true;
+    else if(temp.data > k) temp = temp.left;
+    else temp = temp.right;
+  }
+
+  if(previous == NULL) {
+    // create a new node with data k
+  }
+
+  if(previous.data > k) previous.left = new Node(k);
+  else previous.right = new Node(k);
+}
+   #+end_src
+** Check if a given tree is BST or not
+1. One way is if you do a inorder traversal it should come out sorted.
+2. Another way is:
+   1. Consider a random node, the largest of LST should be leaser than node.data
+   2. The smallest of RST should be greater than node.data
+   3. max(LST) < node.data < min(RST)
+   4. Find max and min will be a bottom up approach.
+3. Let's see a top-down approach.
+   1. Root node's data should lie within the range of -infinity and +infinity.
+   2. Root's left's data should lie within -infinity and root's data - 1.
+   3. Root's right's data should lie within root's data + 1 and +infinity.
+   4. Do those steps recursively.
+      #+begin_src C
+bool isBST(Node root, leftLimit, rightLimit) {
+  if(root == NULL) {
+    return true;
+  }
+
+  if(root.data >= leftLimit and root.data <= rightLimit) {
+    return isBST(root.left, leftLimit, root.data - 1) and isBST(root.right, root.data + 1, rightLimit)
+  }
+
+  return false;
+}
+      #+end_src
