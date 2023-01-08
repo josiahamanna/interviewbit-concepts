@@ -90,3 +90,16 @@ bool isBST(Node root, leftLimit, rightLimit) {
   return false;
 }
       #+end_src
+** Delete a node from BST
+1. First we need to search for that node. While searching maintain two things parent and current pointer. There are different cases we need to consider before deleting.
+   1. Case 0: Search might fail
+   2. Case 1: If it is a leaf node, just point the parent's light or right (whichever it is) to null.
+   3. Case 2: Node with one child. In this case we need to point parent's left or right to current's left or right.
+   4. Case 3: Node with two children.
+      1. In this case its hard to delete the node. Those children will have their own children. We need a node which can replace the deleted node.
+      2. Which node to select is the question.
+      3. What if we chose a maximum node in the left sub tree (of the deleted node) and replace with it?
+      4. Or what if we chose the minimum of the right sub tree and replace with it?
+      5. Both will work, chose one of the above ideas.
+      6. Here when picking either one of them, it will be a leaf node or a node with one child.
+      7. For example if we are deciding to go with the maximum of the left sub tree, you will get a node with nothing on right to it (it may be a leaf node or it might have child on left).
