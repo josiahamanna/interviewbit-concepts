@@ -103,3 +103,70 @@ bool isBST(Node root, leftLimit, rightLimit) {
       5. Both will work, chose one of the above ideas.
       6. Here when picking either one of them, it will be a leaf node or a node with one child.
       7. For example if we are deciding to go with the maximum of the left sub tree, you will get a node with nothing on right to it (it may be a leaf node or it might have child on left).
+   5. Pseudo code
+      #+begin_src C
+Node removeNode(Node root, int k) {
+  let Node curr = root, previous = null;
+
+  // search for k
+  while(curr != NULL) {
+    previous = curr;
+    if(curr.data == k) {
+      break;
+    } else if(curr.data > k) {
+      curr = curr.left;
+    } else if(curr.data < k) {
+      curr = curr.right;
+    }
+  }
+
+  function connectPreviousAndTemp(Node curr, Node previous, Node temp) {
+    if(curr.data == previous.left.data) {
+      previous.left = temp;
+    } else {
+      previous.right = temp;
+    }
+  }
+
+  function findMaxOfLST(Node, lst, Node *previousLST) {
+
+    while(lst.right != NULL) {
+      ,*previousLST = lst;
+
+      lst = lst.right;
+    }
+
+    return lst;
+  }
+
+  if(curr != NULL) { // if k is found
+    Node temp = NULL, previousLST = NULL;
+
+    if(curr.left == NULL && curr.right == NULL) {
+      connectPreviousAndTemp(curr, previous, temp);
+    } else if(curr.left != NULL && curr.right == NULL) {
+      temp = curr.left;
+      connectPreviousAndTemp(curr, previous, temp);
+    } else if(curr.right != NULL && curr.left == NULL) {
+      temp = curr.right;
+      connectPreviousAndTemp(curr, previous, temp);
+    } else { // this means curr node has two child, lets find the maxmum of lst
+      Node maxOnLeft = findMaxOfLST(curr.left, &previousLST);
+      if(previousLST == NULL) {
+        curr.left = maxOnLeft.left;
+      } else {
+        previousLST.right = maxOnLeft.left;
+      }
+
+      maxOnLeft.left = curr.left;
+      maxOnLeft.right = curr.right;
+
+      connectPreviousAndTemp(curr, previous, maxOnLeft);
+    }
+
+    return root;
+  } else {
+    return NULL;
+  }
+}
+      #+end_src
