@@ -1,0 +1,64 @@
+#+title: Notes
+* BST 3
+** Inorder traversal of binary tree without using recursion.
+1. Till you get a null in the left side keep inserting in to the stack.
+2. If root == null, get the top of stack and print it's data and move to left
+3. Pseudo code
+   #+begin_src C
+void inorderIter(Node root) {
+  Stack<Node> s;
+  Node curr = root;
+
+  while(curr != NULL && s.size() > 0) {
+    if(curr != NULL) {
+      s.push(curr);
+      curr = curr.left;
+    } else {
+      Node temp = s.top();
+      s.pop();
+      pring(temp.data);
+      curr = temp.right;
+    }
+  }
+}
+   #+end_src
+4. TC: O(N), SC: O(H).
+** Moris Inorder Traversal
+1. In this method we are using O(1) SC for Inorder traversal.
+2. We know that the last node that is printed in inorder is the right most node node
+3. Example
+   [[./screenshots/inorder-last-node-printed-1.png]]ans 8
+   [[./screenshots/inorder-last-node-printed-2.png]]
+4. Try connecting the the right most node (temp) to the curr so that we don't lose curr.
+   [[./screenshots/connecting-last-right-most-to-curr.png]]
+5. To overcome the cycle we disconnect the link by checking if curr = temp.right.
+6. Pseudo code
+   #+begin_src C
+void morisInorderTraversal(Node root) {
+  Node curr = root;
+
+  while(curr != NULL) {
+    if(curr.left == NULL) {
+      print(curr.data);
+      curr = curr.right;
+    } else {
+      Node temp = curr.left;
+      while(temp.right !== NULL && temp.right !== curr) {
+        temp = temp.right;
+      }
+
+      if(temp.right == NULL) {
+        temp.right = curr;
+        curr = curr.left;
+      }
+
+      // this the second time your are visiting, so break the connection;
+      if(temp.right == curr) {
+        temp.right = NULL;
+        print(curr.data);
+        curr = curr.right;
+       }
+    }
+  }
+}
+   #+end_src
