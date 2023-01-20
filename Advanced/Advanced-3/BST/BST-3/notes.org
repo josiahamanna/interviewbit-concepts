@@ -62,3 +62,23 @@ void morisInorderTraversal(Node root) {
   }
 }
    #+end_src
+** Given a BST find the shortest path between them.
+1. Example
+   [[./screenshots/shortest-path-between-nodes.png]]
+2. We can conclude that finding the Least Common Ancestor can help us solving the problem.
+   [[./screenshots/lca-in-bst.png]]
+3. Finding LCA
+   #+begin_src C
+Node findLCA(Node root, int b, int c) {
+  if(root == NULL) return -1;
+
+  if(root.val > b && root.val > c) {
+    return findLCA(root.left, b, c);
+  } else if (root.val < b && root.val < c) {
+    return findLCA(root.right, b, c);
+  } else {
+    return root.val;
+  }
+}
+   #+end_src
+4. After finding the lca calculate the distance of b and c from lca, add it and return. That will be the shortest path between those two nodes.
