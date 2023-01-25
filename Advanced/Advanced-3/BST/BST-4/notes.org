@@ -1,0 +1,55 @@
+#+title: Notes
+* BST 4
+** Circular doubly linked list
+[[./screenshots/circular-doubly-linked-list.png]]
+1. Head's previous is linking to tail. Tail's next is pointing to head.
+2. A single node is also a circular doubly linked list as shown in the picture.
+** Problem
+1. Given two circular doubly linked list, combine them into 1 circular doubly linked list and return head.
+2. Straight forward
+   1. Say, you are given a CDLL1 and CDLL2
+   2. Make CDLL1's tail's next point to CDLL2 head.
+   3. Make CDLL2's head's previous point to CDLL1's tail.
+   4. Make CDLL2's tail's next point to CDLL1's head.
+   5. Make CDLL1's head's previous point to CDLL2 tail.
+3. Pseudo code
+   #+begin_src C
+CNode combine(CNode n1, CNode n2) {
+  if (n1 == NULL && n2 == NULL) return NULL;
+  if (n1 == NULL) return n2;
+  if (n2 == NULL) return n1;
+  // get the tail of both
+  CNode t1 = n1.prev;
+  CNode t2 = n2.prev;
+
+  // make connections
+  t1.next = n1;
+  n2.prev = t1;
+  t2.next = n1;
+  n1.prev = t2
+}
+   #+end_src
+** Given a BST, convert it into sorted circular doubly linked list.
+1. Example
+   [[./screenshots/bst-to-circular-doubly-linked-list.png]]
+2. Constraint is that you cannot store the BST to an array.
+3. Recursion approach. Assumption: Given BST, the function converts it to sorted CDLL and returns it's head.
+   1. Call this function on root's left and assign it to lable leftCDLL.
+   2. Call this function on root's right and assign it to lable rightCDLL.
+   3. Call combine function on leftCDLL and root and assign it to lable combinedLeftCDLLANDRoot;
+   4. Call combine function on combinedLeftCDLLANDRoot and rightCDLL.
+   5. Base condition will be if root == NULL then return NULL.
+4. Pseudo code
+   #+begin_src C
+Node convert(Node root) {
+  if(root == NULL) return NULL;
+
+  Node leftCDLL = convert(root.left);
+  Node rightCLL = convert(root.right);
+
+  root.left = root;
+  root.right = root;
+
+  return combine((combine(leftCDLL, root), rightCDLL);
+}
+   #+end_src
