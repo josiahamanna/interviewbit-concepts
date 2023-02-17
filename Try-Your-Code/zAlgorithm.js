@@ -16,4 +16,3 @@ const newFunction = myFunction("newFunction");
 anotherFunction();
 newFunction();
 anotherFunction();
-newFunction();
