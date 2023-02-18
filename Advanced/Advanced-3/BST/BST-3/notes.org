@@ -16,7 +16,7 @@ void inorderIter(Node root) {
     } else {
       Node temp = s.top();
       s.pop();
-      pring(temp.data);
+      print(temp.data);
       curr = temp.right;
     }
   }
