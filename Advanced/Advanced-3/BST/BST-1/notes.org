@@ -93,7 +93,7 @@ bool isBST(Node root, leftLimit, rightLimit) {
 ** Delete a node from BST
 1. First we need to search for that node. While searching maintain two things parent and current pointer. There are different cases we need to consider before deleting.
    1. Case 0: Search might fail
-   2. Case 1: If it is a leaf node, just point the parent's light or right (whichever it is) to null.
+   2. Case 1: If it is a leaf node, just point the parent's left or right (whichever it is) to null.
    3. Case 2: Node with one child. In this case we need to point parent's left or right to current's left or right.
    4. Case 3: Node with two children.
       1. In this case its hard to delete the node. Those children will have their own children. We need a node which can replace the deleted node.
@@ -103,7 +103,7 @@ bool isBST(Node root, leftLimit, rightLimit) {
       5. Both will work, chose one of the above ideas.
       6. Here when picking either one of them, it will be a leaf node or a node with one child.
       7. For example if we are deciding to go with the maximum of the left sub tree, you will get a node with nothing on right to it (it may be a leaf node or it might have child on left).
-   5. Pseudo code
+   5. Pseudo code iterative method
       #+begin_src C
 Node removeNode(Node root, int k) {
   let Node curr = root, previous = null;
@@ -167,6 +167,32 @@ Node removeNode(Node root, int k) {
     return root;
   } else {
     return NULL;
+  }
+}
+      #+end_src
+   6. Pseudo code recursive method
+      #+begin_src C
+Node Delete(node root, int k) {
+  if(root == NULL) return;
+
+  if(root.data == k) {
+    if(root.right == NULL && root.left == NULL) {
+      return NULL;
+    }  
+    if(root.left != NULL && root.right != NULL) {
+      return root.right;
+    }
+    if(root.right != NULL && root.left != NULL) {
+      return root.left;
+    }  
+    int x = floor(root);
+    root.data = x;
+    root.left = Delete(root.left, x);
+    return root;
+  } else if(root.data > k) {
+    root.left = Delete(root.left, k);
+  } else {
+    root.right = Delete(root.right, k);
   }
 }
       #+end_src
