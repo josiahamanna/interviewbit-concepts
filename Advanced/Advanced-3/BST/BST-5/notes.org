@@ -1,0 +1,76 @@
+#+title: Notes
+* Trees 5
+** Iterative post order
+1. Maintain two stacks s1 and s2;
+2. Put root in s1
+3. Run a while loop on s1 (s1.size() != empty)
+   1. Pop element from s1 and store it in curr.
+   2. Push curr's data in s2
+   3. Push curr left child in s1
+   4. Push curr right child in s1
+4. Return reverse of s2
+5. Pseudo code
+   #+begin_src C
+void postorder(Node root) {
+   stack s1, s2;
+
+   while(s1.size() > 0) {
+     Node t = s1.pop();
+     s2.push(t)
+     if(t.left) {
+       s1.push(t.left);
+     }    
+     if(t.right) {
+       s1.push(t.right)
+     }
+   }
+   // reverse s2 and return
+} 
+   #+end_src
+** Given node, get rightmost node of inorder in LST.
+1. Just use a temp node
+   #+begin_src C
+int floor(node) {
+  temp = node.right;
+  while(temp.right != NULL) {
+    temp = temp.right;
+  }  
+  return temp.data;
+}  
+   #+end_src
+   
+** Finding floor and ceil of value
+1. floor: largest value <= given value
+2. ceil: smallest val >= given value
+3. In a tree the floor is the right most child of the left child.
+4. Ceil is left most child of the right child.
+** Deleting a node.
+1. Recursive method.
+   #+begin_src C
+Node Delete(node root, int k) {
+  if(root == NULL) return;
+
+  if(root.data == k) {
+    if(root.right == NULL && root.left == NULL) {
+      return NULL;
+    }  
+    if(root.left != NULL && root.right != NULL) {
+      return root.right;
+    }
+    if(root.right != NULL && root.left != NULL) {
+      return root.left;
+    }  
+    
+    int x = floor(root);
+    root.data = x;
+    root.left = Delete(root.left, x);
+    return root;
+    
+  } else if(root.data > k) {
+    root.left = Delete(root.left, k);
+  } else {
+    root.right = Delete(root.right, k);
+  }
+}
+   #+end_src
+2. TC: O(H); SC: O(H)
