@@ -1,18 +1,18 @@
-let counter = 0;
+const solve = (A) => {
+	let perfectNumbers = ['1', '2'], queue = [], result = '', ini = '';
+	let j = 0;
 
-const myFunction = function (usedBy) {
-  const incrementCounter = function () {
-    console.log(usedBy, ": before: ", counter);
-    counter = counter + 1;
-    console.log("after: ", counter);
-  };
+	for(let i = 0; i < A; i++) {
+		result = ini + perfectNumbers[j];	
+		queue.push(result);
+		j  = (j + 1) % 2;
+		
+		if(j == 0) {
+			ini = queue.shift();	
+		}
+	};
 
-  return incrementCounter;
+	return result;
 };
 
-const anotherFunction = myFunction("anotherFunction");
-const newFunction = myFunction("newFunction");
-
-anotherFunction();
-newFunction();
-anotherFunction();
+console.log(solve(10));

@@ -74,3 +74,26 @@ Node Delete(node root, int k) {
 }
    #+end_src
 2. TC: O(H); SC: O(H)
+** Side pointer
+1. Perfect Binary Tree: Each pointer must have two children or none.
+2. You can solve side pointer using extra space, i.e., queue.
+3. How to solve it using no extra space.
+4. For a perfect Binary Tree
+   #+begin_src C
+void connectSides(Node root) {
+  Node curr = root;
+
+  while(curr.left != NULL) {
+    Node temp = curr;
+
+    while(temp != NULL) {
+      temp.left.side = temp.right;
+      if(temp.side) {
+        temp.right.side = temp.side.left;
+      }  
+      temp = temp.side;
+    }
+    curr = curr.left;
+  }
+}  
+   #+end_src
