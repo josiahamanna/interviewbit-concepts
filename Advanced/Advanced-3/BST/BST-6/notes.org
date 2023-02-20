@@ -1,0 +1,32 @@
+#+title: Notes
+
+* Serialization of BT using level order traversal
+[[./screenshots/serialize-bst.png]]
+1. Use level order technique. 
+2. Whenever you find no left or right child push NULL to the queue.
+3. When you process queue (dequeue), wherever you find NULL, push -1 to the stack (or list).
+   #+begin_src C
+list serializeBST(Node root) {
+  
+  list<int> l;
+  queue<Node> q;
+
+  q.enqueue(root);
+
+  while(queue.size() > 0) {
+    Node t = q.front();
+    q.dequeue();
+
+    if(t == NULL) {
+      l.add(-1);
+      continue;
+    }
+
+    l.add(t.data);
+
+    q.enqueue(t.left);
+    q.enqueue(t.right);
+  }  
+}
+   #+end_src
+4. TC: O(N); SC: O(N);
