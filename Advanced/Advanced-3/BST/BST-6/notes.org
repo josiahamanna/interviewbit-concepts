@@ -1,6 +1,6 @@
 #+title: Notes
-
-* Serialization of BT using level order traversal
+* BST-6
+** Serialization of BT using level order traversal
 [[./screenshots/serialize-bst.png]]
 1. Use level order technique. 
 2. Whenever you find no left or right child push NULL to the queue.
@@ -27,6 +27,75 @@ list serializeBST(Node root) {
     q.enqueue(t.left);
     q.enqueue(t.right);
   }  
-}
+}  
    #+end_src
 4. TC: O(N); SC: O(N);
+** Given an array of serialized elements, build BST.
+1. Use queue for processing left and right child.
+2. Pseudo code
+   #+begin_src C
+Node deserialize(Array<int> A) {
+  Node root = new Node(A[0]);
+
+  queue<Node> q;
+  int i = 1;
+
+  q.enqueue(root);
+
+  while(q.size() > 0) {
+    Node temp = q.front();
+    q.enqueue();
+
+    if(A[i] != -1) {
+      temp.left = new Node(A[i]);
+      q.push(temp.left);      
+    }
+    
+    i++;
+    
+    if(A[i] != -1) {
+      temp.right = new Node(A[i]);
+      q.push(temp.right);
+    }  
+    
+    i++;
+    
+  }  
+}  
+   #+end_src
+** Find kth smallest element in BST
+1. We can do it three ways
+   1. Inorder array
+      1. Get inorder and return inorder[k-1]
+      2. TC: O(N); SC: O(N);
+   2. Recursion 
+      1. Where ever you are printing the eleement keep a k counter, and when you reach k == 0, return that eleement
+      2. TC: O(k); SC: O(H)
+   3. Moris traversal
+      1. Maintain k counter, decrement k when you print the element, when k == 0, return that element.
+      2. TC: O(k); SC: O(1)
+** Find kth smallest for Q queries
+1. If we consider the above approaches then there is slight change in the Time and Space complexities.
+   1. Inorder array: TC: O(N) + O(Q)
+   2. Recursion: TC: O(Q*N)
+   3. Moris traversal: TC: O(Q*N)
+2. We can use another approach.
+   1. Store the size of the tree for all nodes using hashmap.
+   2. Then iterate through that map. Say you have root and k.
+      1. if(size(root.left) == k-1) then that's the element.
+      2. if(size(root.left) >= k) then move to left; root = root.left;
+      3. else move right, root = root.right. You need to update k = k - size(root.left) - 1;
+      4. Pseudo code
+     #+begin_src C
+Node curr = root;
+while(curr != NULL) {
+  if(size(LST) == k -1) {
+    return curr.data;
+  } else if(size(LST) >= k) {
+    curr = curr.left;
+  } else {
+    curr = curr.right;
+    k = k - size(LST) - 1;
+  }  
+}
+     #+end_src 
