@@ -1,0 +1,103 @@
+#+title: Notes
+* Tries-1
+** What is tries?
+1. Hierarchical data structure.
+2. N-array tree (children can be more than two).
+3. Data is stored top to down.   
+3. Mostly used to retrieval. (the name tries comes from re[trie]val)
+4. Used in auto-suggest, auto-correction, auto-complete.
+   
+** Given a query check if it belongs to a set of correct words.
+1. We need tries to solve this.
+2. How do we define it? We know that it is a data structure where data is stored top to down. 
+3. We can create a node (a dummy node) called root node. It can have array of children. 
+4. In our case, we have 26 characters. So we have have 26 children in an array.
+   #+begin_src C
+class Node {
+  Node ch[26]
+  // all children initialized to NULL  
+}
+   #+end_src
+5. Here, a will have 0th index, b will have 1st index and so on.
+    [[./screenshots/word-belongs-to-set.png]]
+6. Here is how we build the dictionary.
+   [[./screenshots/build-dict.png]]
+7. We have a catch here.
+   1. Suppose we are searching for draw and the word is not present in the dict.
+   2. But when we traverse the trie you already have the path (for the word drawn). How do you differentiate that in a path is also for draw?
+   3. Simply add one data value to the class Node. That is boolean, isEnd.
+       #+begin_src C
+    class Node {
+      boolean isEnd = false;
+      Node ch[26]
+      // all children initialized to NULL  
+    }
+       #+end_src
+   4. So when you insert the word draw, if the path exists, then you simply update the value of isEnd to true. 
+   5. This indication helps us to know whether a word ends there or not.
+8. Another catch there is huge space wastage here. At every node we have 26 children, but we might not use all children. N*L*26. 
+9. TC for insertig is N*L and TC retrieval is O(Q*L)
+   1. In trie to insert a string of L it takes L iterations (worst case).
+   2. In hashset/hashmap to insert a string of L it takes O(L) (average case).
+   3. Tries has better TC in searching and insertion.
+10. We need to do something about the space. Just change the Node class definition. Instead of array use map
+    #+begin_src C
+class Node {
+  boolean isEnd = false;
+  map<char, Node> ch;
+}  
+    #+end_src
+11. Implementation 
+    #+begin_src C
+class Node {
+  bool isEnd;
+  hashmap<char, Node> hm;
+  Node() {
+    isbool = false;
+  }  
+}
+
+Node root = new Node();
+
+Read N;
+for(i = 0; i <= Q; i++) {
+  Read word;
+  insert(word, root);
+}
+
+Read Q;
+for(i = 1; i <= Q; i++) {
+  Read word;
+  if(search(word, root)) {
+    print('Exists');
+  } else {
+    print('Not present');
+  }  
+}
+
+void insert(string str, Node r) {
+  int n = str.length();
+  for(i = 0; i < n; i++) {
+    char ch = str[i];
+    if(!r.hm[ch]) {
+      Node t = new Node();
+      r.hm[ch] = t;
+      r = r.hm[ch] // or r = t;
+    } else {
+      r = r.hm[ch];
+    }
+  }
+  // all characters are inserted and we are in the last node
+  r.isEnd= true;
+}
+
+bool find(string str, Node r) {
+  int n = str.length();
+  for(i = 0; i < n; i++) {
+    char ch = str[i];
+    if(!r.hm[ch]) return false;
+    else r = r.hm[ch];
+  }
+  return r.isEnd;
+}  
+    #+end_src
