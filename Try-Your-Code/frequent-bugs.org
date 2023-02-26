@@ -1,0 +1,4 @@
+#+title: Frequent Bugs
+1. Missing keywords
+2. Missing parameters
+3. 
